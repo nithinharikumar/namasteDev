@@ -1,0 +1,36 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "this is namaste react by nithin harikumar",
+  "default": "app.js",
+
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nithinharikumar/namasteDev.git"
+  },
+  "keywords": [
+    "Namaste",
+    "React"
+  ],
+  "author": "Nithin Harikumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nithinharikumar/namasteDev/issues"
+  },
+  "homepage": "https://github.com/nithinharikumar/namasteDev#readme",
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "browserslist": [
+    "last 10  versions"
+  ]
+}

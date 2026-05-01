@@ -1,0 +1,35 @@
+cimport React from "react";
+import ReactDOM from 'react-dom/client';
+const heading = React.createElement("h1", { id: "heading", key: "the hedaing is here" }, "the  hedaing is here  fundamentally");
+// JSX is not HTML in JS; it has an HTML-like syntax. JSX code is transpiled to code that browsers or React understand.
+// Babel is a package that helps to transpile JSX code into code that React understands.its a compailer
+//react.createElement   is converted to an object and  then the  js object is rendered as an html elemet this is how the react code   works  .jsx code is  not  converted to html directly .FIRST it  converted to react.createElement() and  then  to an object and  then  to an html elemet .ie   they are   
+//install prettier ,bracket pair colorizer ,live server ,better comment,eslint
+//there  are  two types  of component   in react  
+//1.Class Based   components-old way of writing  components
+//2.Functional Components-new way of writing  components
+//it is  just a  function in js that returns jsx code 
+//the root .render isa  convert  every react element tot html
+// the component composition is  writing  the component   inside another componetn is called as component composition
+// const jsxHeading = (<div>
+//     <h1 id="heading" className="rott" tabIndex="5">the  hedaing is here  funde</h1>
+
+// </div>);
+//component composition is  writing  the component   inside another componetn 
+const Title = () => (
+    <h1>the hedaing is here  funde   main aanu myre</h1>
+)
+const elem = (<span>the span is heerer</span>)
+const Titlen = (<div>  < h1 > the   react element is here</h1><HeadingComponent /></div>)
+const HeadingComponent = () => (
+    <>
+        {Titlen}
+        {elem}
+        <Title />
+        <h1>the hedaing is here  funde</h1>
+        <p>the hedaing and  paragraph  </p>
+        <img src="https://dummyimage.com/600x400/000/fff" alt="" />
+    </>
+)
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<HeadingComponent />);

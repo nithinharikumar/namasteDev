@@ -57,3 +57,27 @@
 //component composition is writing the component inside another componetn
 //cross site scriptiong is a security risk in react that somweone can run malicious code in your website
 //even a function can called inside a component because js is there right
+
+## // App Architecture Plan:
+
+- Header
+- - Logo
+- - Nav Items
+-
+- Body
+- - Search
+- - RestaurantContainer
+- - RestaurantCard
+-      - Img
+-      - Name of Res, Star Rating, Cuisine, delivery time
+-
+- Footer
+- - Copyright
+- - Links
+- - Address
+- - Contact
+- props are nothing but like passing args to function .same as normal js function
+  for passing the data w e can pass as data to another componenets
+  #install json viewer in chrome
+  #config driven ui
+  the config driven ui means the ui is driven by the data we are getting from the api.so we can change the ui by just changing the data

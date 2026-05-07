@@ -1,3 +1,37 @@
-#heading {
-    color: red;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased bg-white text-slate-900;
+  }
+}
+
+@layer utilities {
+  .header-container {
+    @apply flex justify-between items-center p-4 shadow-sm border-b border-slate-100 sticky top-0 bg-white z-50;
+  }
+  
+  .nav-list {
+    @apply flex items-center gap-8 list-none;
+  }
+  
+  .nav-item {
+    @apply text-slate-600 hover:text-rose-500 font-medium transition-colors cursor-pointer;
+  }
+  
+  .restaurant-grid {
+    @apply flex flex-wrap gap-8 justify-center p-8;
+  }
+  
+  .restaurant-card {
+    @apply w-[300px] border border-slate-100 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300;
+  }
+  body{
+        font-family: 'Outfit', sans-serif;
+  }
 }

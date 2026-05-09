@@ -81,3 +81,35 @@
   #install json viewer in chrome
   #config driven ui
   the config driven ui means the ui is driven by the data we are getting from the api.so we can change the ui by just changing the data
+  there are two type of export and import😄
+
+  -> default export and named export
+
+           -> default export  -we can export only one thing at a time
+           ->   export default  Nameoffun
+           ->  import  Nameoffun from "./file"
+           ->   named export -we can export multiple things at a time
+           ->   export  Nameoffun1,Nameoffun2
+           ->  import  {Nameoffun1,Nameoffun2} from "./file"
+
+  😆react hooks
+  these are normal js fucntions with some predevined feautures utility function
+  why normal js vaiable is not enough for the state in react
+  when i try to modify the normal js variable ,react doesn't know about this variable
+  so it won't re-render the component when this variable changes
+  that's why we need to use useState hook for this
+  #building the body component
+  this is for learning purpose only,we don't usually write the code in this way
+  #react reconcilliation and render
+  first it will create a dummy dom tree and then it will update the real dom tree
+  this is called as reconcilliation
+  #react fibre
+  react fibre is a mechanism by which react reconcilliation is done
+  there are two very important hooks
+  1.useState()---->for manupulating the state variables
+  becuase the hook maintains the state of the component
+  const listofrestuarent
+  2.useEffect()---->for side effects(side effects can be anything that is not related to the rendering)
+  eg:-api calls,timers,event listeners,etc
+  #react router
+  when ever thre state variable changes or updates react will rerender the componenet

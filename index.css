@@ -5,33 +5,105 @@
   --font-display: "Lexend", sans-serif;
 }
 
-@layer base {
-  body {
-    @apply font-sans antialiased bg-white text-slate-900;
-  }
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: white;
 }
 
-@layer utilities {
-  .header-container {
-    @apply flex justify-between items-center p-4 shadow-sm border-b border-slate-100 sticky top-0 bg-white z-50;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 50;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style-type: none;
+}
+
+.nav-item {
+  color: #475569;
+  font-weight: 500;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  color: #f43f5e;
+}
+
+.restaurant-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-left: 10rem ;
+  padding-right: 2rem;
+  padding-bottom: 3rem;
+}
+
+.restaurant-card {
+  width: 300px;
+  border: 1px solid #f1f5f9;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.restaurant-card:hover {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Shimmer Loading Skeleton Styles */
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-left: 10rem;
+  padding-right: 2rem;
+  padding-bottom: 3rem;
+}
+
+.shimmer-card {
+  width: 300px;
+  height: 320px;
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    90deg,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 800px 320px;
+  border-radius: 1.5rem;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
   }
-  
-  .nav-list {
-    @apply flex items-center gap-8 list-none;
+  100% {
+    background-position: 400px 0;
   }
-  
-  .nav-item {
-    @apply text-slate-600 hover:text-rose-500 font-medium transition-colors cursor-pointer;
-  }
-  
-  .restaurant-grid {
-    @apply flex flex-wrap gap-6;
-  }
-  
-  .restaurant-card {
-    @apply w-[300px] border border-slate-100 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300;
-  }
-  body{
-        font-family: 'Outfit', sans-serif;
-  }
+}
+.login-btn {
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  background-color: rgb(134, 198, 134);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+.login-btn:hover {
+  background-color: #95dbc5;
 }

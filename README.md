@@ -85,12 +85,12 @@
 
   -> default export and named export
 
-           -> default export  -we can export only one thing at a time
-           ->   export default  Nameoffun
-           ->  import  Nameoffun from "./file"
-           ->   named export -we can export multiple things at a time
-           ->   export  Nameoffun1,Nameoffun2
-           ->  import  {Nameoffun1,Nameoffun2} from "./file"
+               -> default export  -we can export only one thing at a time
+               ->   export default  Nameoffun
+               ->  import  Nameoffun from "./file"
+               ->   named export -we can export multiple things at a time
+               ->   export  Nameoffun1,Nameoffun2
+               ->  import  {Nameoffun1,Nameoffun2} from "./file"
 
   😆react hooks
   these are normal js fucntions with some predevined feautures utility function
@@ -113,3 +113,14 @@
   eg:-api calls,timers,event listeners,etc
   #react router
   when ever thre state variable changes or updates react will rerender the componenet
+  if no dependency array is given the useeffect will run every time the component renders.
+  if dependency array is empty the useeffect will run only once at the initial render
+  if dependency array is given the useeffect will run only when the value in the dependency array changes
+  if dependency array is not given the useeffect will run only once at the initial render
+  there is two types of routing
+  1.client side routing
+  -in react we can change the url by just changing the state variable  
+   2.server side routing
+  -in react we can't change the url
+  -in server side routing we make a HTTP request to the server and the server will send the data back to you
+  whenevr we make a http request browser get refreshe d

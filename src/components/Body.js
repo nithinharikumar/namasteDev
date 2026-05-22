@@ -1,6 +1,7 @@
 import RestaurantCard from "./RestoCard";
 import { Restaurants } from "../utils/mock";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import logo from "url:../assets/public/njanjan_logo_animated.gif";
 import Shimmer from "./Shimmer";
 import axios from "axios";
@@ -18,24 +19,47 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await axios.get(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=10.0180067&lng=76.3449567&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
-    );
+    try {
+      const data = await axios.get(
+        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=10.0180067&lng=76.3449567&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
+      );
 
-    const json =
-      data.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants || [];
-    setlistofrestuarents(json);
-    setfilteredrestuarents(json);
+      const json =
+        data.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants ||
+        data.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants ||
+        data.data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants ||
+        data.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants ||
+        data.data?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants ||
+        [];
+      
+      if (json.length === 0) {
+        throw new Error("Swiggy API returned empty list.");
+      }
+
+      setlistofrestuarents(json);
+      setfilteredrestuarents(json);
+    } catch (error) {
+      console.warn("⚠️ Swiggy CORS/Cloudflare Block Detected. Safely falling back to local gourmet restaurants!", error);
+      // Fallback: Populate lists with local mock data so the screen loads instantly!
+      setlistofrestuarents(Restaurants);
+      setfilteredrestuarents(Restaurants);
+    }
   };
 
   const filterData = (SearchItem, delay) => {
+    if (SearchItem === "") {
+    }
     if (SearchItem) {
       setTimeout(() => {
-        const filteresdata = listofrestuarents.filter((res) =>
+        const filter = listofrestuarents.filter((res) =>
           res?.info?.name.toLowerCase().includes(SearchItem.toLowerCase()),
         );
-        setfilteredrestuarents(filteresdata);
+        setfilteredrestuarents(filter);
       }, delay);
     } else {
       setfilteredrestuarents(listofrestuarents);
@@ -45,24 +69,39 @@ const Body = () => {
   return listofrestuarents.length === 0 ? (
     <Shimmer />
   ) : (
-    <main className="mx-auto">
-      <div className="flex items-center gap-4 p-8">
-        <input
-          type="text"
-          placeholder="Search for restaurants..."
-          className="px-6 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 flex-grow max-w-md shadow-sm"
-          value={SearchFilter}
-          onChange={(e) => setSearchData(e.target.value)}
-        />
-        <button
-          className="bg-slate-900 text-white px-8 py-3 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg"
-          onClick={() => filterData(SearchFilter, 0)}
-        >
-          Search
-        </button>
-        <div className="filter-container">
+    <main className="max-w-7xl mx-auto px-4 md:px-8">
+      {/* Food Theme Hero Header */}
+      <div className="bg-gradient-to-r from-rose-50 to-amber-50 rounded-3xl p-8 my-8 text-center shadow-sm border border-rose-100/50">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-2 animate-fade-in">
+          Find the Best{" "}
+          <span className="text-rose-500 font-black">Delicacies</span> Near You
+        </h1>
+        <p className="text-slate-500 text-sm max-w-md mx-auto">
+          Discover top-rated restaurants, sweet bakeries, and gourmet cafes, all
+          prepared fresh and delivered instantly!
+        </p>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-slate-100 mb-8">
+        <div className="flex flex-grow max-w-xl gap-3">
+          <input
+            type="text"
+            placeholder="Search for delicious recipes or restaurants..."
+            className="px-6 py-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 flex-grow shadow-sm text-sm"
+            value={SearchFilter}
+            onChange={(e) => setSearchData(e.target.value)}
+          />
           <button
-            className="filter-btn bg-green-400 cursor-pointer text-white px-8 py-3 rounded-2xl font-bold hover:bg-green-500 transition-all shadow-lg"
+            className="bg-rose-500 text-white font-bold px-8 py-3 rounded-2xl hover:bg-rose-600 transition-colors shadow-lg shadow-rose-200/50 cursor-pointer text-sm"
+            onClick={() => filterData(SearchFilter, 0)}
+          >
+            Search 🔍
+          </button>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            className="bg-amber-500 text-white font-bold px-6 py-3 rounded-2xl hover:bg-amber-600 transition-colors shadow-lg shadow-amber-200/50 cursor-pointer text-sm"
             onClick={() => {
               const filteredList = listofrestuarents.filter(
                 (res) => res?.info?.avgRating >= 4.5,
@@ -70,15 +109,45 @@ const Body = () => {
               setfilteredrestuarents(filteredList);
             }}
           >
-            Top Rated Restaurants
+            ⭐ Top Rated (4.5+)
+          </button>
+
+          <button
+            className="bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 transition-colors font-bold px-6 py-3 rounded-2xl text-sm border border-slate-200 cursor-pointer"
+            onClick={() => {
+              setSearchData("");
+              setfilteredrestuarents(listofrestuarents);
+            }}
+          >
+            Reset Menu 🔄
           </button>
         </div>
       </div>
-      <div className="restaurant-grid">
-        {filteredrestuarents?.map((res) => (
-          <RestaurantCard key={res?.info?.id} resData={res?.info} />
-        ))}
-      </div>
+
+      {filteredrestuarents.length === 0 ? (
+        <div className="text-center py-20 bg-slate-50/50 rounded-3xl border border-dashed border-slate-200 max-w-lg mx-auto my-12">
+          <div className="text-6xl mb-4">🍽️</div>
+          <h3 className="text-2xl font-bold text-slate-700 mb-1">
+            No Recipes Found
+          </h3>
+          <p className="text-slate-500 text-sm max-w-xs mx-auto">
+            We couldn't find any restaurants matching "{SearchFilter}". Try
+            searching for another cuisine!
+          </p>
+        </div>
+      ) : (
+        <div className="restaurant-grid">
+          {filteredrestuarents?.map((res) => (
+            <Link
+              key={res?.info?.id}
+              to={"/menu/" + res?.info?.id}
+              className="text-inherit no-underline hover:scale-[1.01] transition-transform duration-200"
+            >
+              <RestaurantCard resData={res?.info} />
+            </Link>
+          ))}
+        </div>
+      )}
     </main>
   );
 };

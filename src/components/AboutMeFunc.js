@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 const AboutMeFunc = (props) => {
   const [count, setCount] = useState(0);
-  useEffect(() => {
-    console.log("useEffect is called");
-    const timer = setInterval(() => {
-      console.log("useEffect is called");
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, [count]);
+
   const { name, location, email } = props;
 
   return (

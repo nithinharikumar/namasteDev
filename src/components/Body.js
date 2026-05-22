@@ -1,55 +1,17 @@
 import RestaurantCard from "./RestoCard";
 import { Restaurants } from "../utils/mock";
 import { useState, useEffect } from "react";
+import useResturents from "../utils/hooks/useResturents";
 import { Link } from "react-router-dom";
 import logo from "url:../assets/public/njanjan_logo_animated.gif";
 import Shimmer from "./Shimmer";
 import axios from "axios";
 const Body = () => {
   //state variable
-
-  const [listofrestuarents, setlistofrestuarents] = useState([]);
-  const [filteredrestuarents, setfilteredrestuarents] = useState([]);
   const [SearchFilter, setSearchData] = useState("");
 
-  console.log(listofrestuarents, "list of  res");
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const data = await axios.get(
-        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=10.0180067&lng=76.3449567&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
-      );
-
-      const json =
-        data.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        [];
-      
-      if (json.length === 0) {
-        throw new Error("Swiggy API returned empty list.");
-      }
-
-      setlistofrestuarents(json);
-      setfilteredrestuarents(json);
-    } catch (error) {
-      console.warn("⚠️ Swiggy CORS/Cloudflare Block Detected. Safely falling back to local gourmet restaurants!", error);
-      // Fallback: Populate lists with local mock data so the screen loads instantly!
-      setlistofrestuarents(Restaurants);
-      setfilteredrestuarents(Restaurants);
-    }
-  };
+  const [listofrestuarents, filteredrestuarents, setfilteredrestuarents] =
+    useResturents();
 
   const filterData = (SearchItem, delay) => {
     if (SearchItem === "") {

@@ -16,7 +16,7 @@ class About extends React.Component {
   async componentDidMount() {
     const data = await fetch("https://api.github.com/users/nithinharikumar");
     const json = await data.json();
-    console.log(json);
+
     this.setState({
       userinfo: {
         name: json.name,
@@ -24,18 +24,8 @@ class About extends React.Component {
         email: json.email,
       },
     });
-    this.interval = setInterval(() => {
-      console.log("setinterval is called");
-    }, 1000);
-    console.log("didmount parent");
   }
-  async componentDidUpdate() {
-    console.log("update PARENT is called");
-  }
-  async componentWillUnmount() {
-    console.log("componentWillUnmount parent is called");
-    await clearInterval(this.interval);
-  }
+
   render() {
     const { name, bio, email } = this.state.userinfo;
     return (

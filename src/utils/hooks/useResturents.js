@@ -4,7 +4,7 @@ import { Restaurants } from "../mock";
 
 const useResturents = () => {
   const [listofrestuarents, setlistofrestuarents] = useState([]);
-  const [filteredrestuarents, setfilteredrestuarents] = useState();
+
 
   useEffect(() => {
     fetchData();
@@ -34,18 +34,18 @@ const useResturents = () => {
       }
 
       setlistofrestuarents(json);
-      setfilteredrestuarents(json);
+
     } catch (error) {
       console.warn(
         "⚠️ Swiggy CORS/Cloudflare Block Detected. Safely falling back to local gourmet restaurants!",
         error,
       );
       setlistofrestuarents(Restaurants);
-      setfilteredrestuarents(Restaurants);
+
     }
   };
 
-  return [listofrestuarents, filteredrestuarents, setfilteredrestuarents];
+  return listofrestuarents;
 };
 
 export default useResturents;

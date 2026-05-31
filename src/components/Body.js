@@ -6,27 +6,21 @@ import { Link } from "react-router-dom";
 import logo from "url:../assets/public/njanjan_logo_animated.gif";
 import Shimmer from "./Shimmer";
 import axios from "axios";
+import useSearch from "../utils/hooks/useSearch";
 const Body = () => {
-  //state variable
   const [SearchFilter, setSearchData] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showTopRated, setShowTopRated] = useState(false);
 
-  const [listofrestuarents, filteredrestuarents, setfilteredrestuarents] =
-    useResturents();
+  const listofrestuarents = useResturents();
 
-  const filterData = (SearchItem, delay) => {
-    if (SearchItem === "") {
-    }
-    if (SearchItem) {
-      setTimeout(() => {
-        const filter = listofrestuarents.filter((res) =>
-          res?.info?.name.toLowerCase().includes(SearchItem.toLowerCase()),
-        );
-        setfilteredrestuarents(filter);
-      }, delay);
-    } else {
-      setfilteredrestuarents(listofrestuarents);
-    }
-  };
+  // Use custom search hook, which runs whenever searchQuery changes
+  const searchedRestaurants = useSearch(searchQuery, listofrestuarents);
+
+  // Derive final filtered list by applying top rated filter if toggled
+  const filteredrestuarents = showTopRated
+    ? searchedRestaurants.filter((res) => res?.info?.avgRating >= 4.5)
+    : searchedRestaurants;
 
   return listofrestuarents.length === 0 ? (
     <Shimmer />
@@ -55,7 +49,7 @@ const Body = () => {
           />
           <button
             className="bg-rose-500 text-white font-bold px-8 py-3 rounded-2xl hover:bg-rose-600 transition-colors shadow-lg shadow-rose-200/50 cursor-pointer text-sm"
-            onClick={() => filterData(SearchFilter, 0)}
+            onClick={() => setSearchQuery(SearchFilter)}
           >
             Search 🔍
           </button>
@@ -63,12 +57,12 @@ const Body = () => {
 
         <div className="flex items-center gap-3">
           <button
-            className="bg-amber-500 text-white font-bold px-6 py-3 rounded-2xl hover:bg-amber-600 transition-colors shadow-lg shadow-amber-200/50 cursor-pointer text-sm"
+            className={`font-bold px-6 py-3 rounded-2xl transition-colors shadow-lg cursor-pointer text-sm ${showTopRated
+              ? "bg-amber-600 text-white shadow-amber-300/50"
+              : "bg-amber-500 text-white hover:bg-amber-600 shadow-amber-200/50"
+              }`}
             onClick={() => {
-              const filteredList = listofrestuarents.filter(
-                (res) => res?.info?.avgRating >= 4.5,
-              );
-              setfilteredrestuarents(filteredList);
+              setShowTopRated(!showTopRated);
             }}
           >
             ⭐ Top Rated (4.5+)
@@ -78,7 +72,8 @@ const Body = () => {
             className="bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 transition-colors font-bold px-6 py-3 rounded-2xl text-sm border border-slate-200 cursor-pointer"
             onClick={() => {
               setSearchData("");
-              setfilteredrestuarents(listofrestuarents);
+              setSearchQuery("");
+              setShowTopRated(false);
             }}
           >
             Reset Menu 🔄
@@ -93,7 +88,7 @@ const Body = () => {
             No Recipes Found
           </h3>
           <p className="text-slate-500 text-sm max-w-xs mx-auto">
-            We couldn't find any restaurants matching "{SearchFilter}". Try
+            We couldn't find any restaurants matching "{searchQuery}". Try
             searching for another cuisine!
           </p>
         </div>

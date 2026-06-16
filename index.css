@@ -47,7 +47,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  padding-left: 10rem ;
+  padding-left: 10rem;
   padding-right: 2rem;
   padding-bottom: 3rem;
 }
@@ -78,13 +78,11 @@ body {
   width: 300px;
   height: 320px;
   background: #f6f7f8;
-  background-image: linear-gradient(
-    90deg,
-    #f6f7f8 0%,
-    #edeef1 20%,
-    #f6f7f8 40%,
-    #f6f7f8 100%
-  );
+  background-image: linear-gradient(90deg,
+      #f6f7f8 0%,
+      #edeef1 20%,
+      #f6f7f8 40%,
+      #f6f7f8 100%);
   background-repeat: no-repeat;
   background-size: 800px 320px;
   border-radius: 1.5rem;
@@ -95,10 +93,12 @@ body {
   0% {
     background-position: -400px 0;
   }
+
   100% {
     background-position: 400px 0;
   }
 }
+
 .login-btn {
   cursor: pointer;
   color: rgb(0, 0, 0);
@@ -107,6 +107,7 @@ body {
   border-radius: 0.5rem;
   transition: all 0.2s;
 }
+
 .login-btn:hover {
   background-color: #95dbc5;
 }

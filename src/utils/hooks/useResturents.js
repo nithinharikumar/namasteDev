@@ -13,24 +13,17 @@ const useResturents = () => {
   const fetchData = async () => {
     try {
       const data = await axios.get(
-        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=10.0180067&lng=76.3449567&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
+        "/api/v1/listRestaurants"
       );
 
-      const json =
-        data.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        data.data?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants ||
-        [];
+      const cards = data.data?.data?.cards || data.data?.data?.data?.cards || [];
+      const restaurantCard = cards.find(
+        (c) => c?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
+      const json = restaurantCard?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
 
       if (json.length === 0) {
-        throw new Error("Swiggy API returned empty list.");
+        throw new Error("API returned empty list or could not find restaurants card.");
       }
 
       setlistofrestuarents(json);

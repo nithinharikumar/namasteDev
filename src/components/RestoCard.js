@@ -7,7 +7,7 @@ const RestaurantCard = ({ resData }) => {
     resData;
 
   return (
-    <div className="restaurant-card bg-white border border-slate-100 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 w-[300px]">
+    <div className="restaurant-card bg-white border border-slate-100 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 w-[500px]">
       <div className="h-48 overflow-hidden relative">
         <img
           src={CDN_URL + cloudinaryImageId}
@@ -39,5 +39,16 @@ const RestaurantCard = ({ resData }) => {
     </div>
   );
 };
+//higherr  ordeer   component
 
+//it  gets  the    restaurent card as  input and  enhace  the  componenet and return it  in this we are adding a   
+export const PromotedRestoCrad = (RestaurantCard) => {
+  return (props) => {
+    return (<>
+      <label className="absolute z-10 bg-black text-white m-2 p-2 rounded-lg">Promoted</label>
+      <RestaurantCard {...props} />
+
+    </>)
+  }
+}
 export default RestaurantCard;

@@ -1,7 +1,8 @@
-import RestaurantCard from "./RestoCard";
+import RestaurantCard, { PromotedRestoCrad } from "./RestoCard";
 import { Restaurants } from "../utils/mock";
 import { useState, useEffect } from "react";
 import useResturents from "../utils/hooks/useResturents";
+
 import { Link } from "react-router-dom";
 import logo from "url:../assets/public/njanjan_logo_animated.gif";
 import Shimmer from "./Shimmer";
@@ -13,6 +14,7 @@ const Body = () => {
   const [showTopRated, setShowTopRated] = useState(false);
 
   const listofrestuarents = useResturents();
+  const RestocardWithPromo = PromotedRestoCrad(RestaurantCard);
 
   // Use custom search hook, which runs whenever searchQuery changes
   const searchedRestaurants = useSearch(searchQuery, listofrestuarents);
@@ -100,7 +102,8 @@ const Body = () => {
               to={"/menu/" + res?.info?.id}
               className="text-inherit no-underline hover:scale-[1.01] transition-transform duration-200"
             >
-              <RestaurantCard resData={res?.info} />
+              {res.info?.badges?.textExtendedBadges ? <RestocardWithPromo resData={res?.info} /> : <RestaurantCard resData={res?.info} />}
+
             </Link>
           ))}
         </div>

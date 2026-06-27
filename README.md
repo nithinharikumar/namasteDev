@@ -123,4 +123,15 @@
    2.server side routing
   -in react we can't change the url
   -in server side routing we make a HTTP request to the server and the server will send the data back to you
-  whenevr we make a http request browser get refreshe d
+  whenevr we make a http request browser get refreshed 
+  REDUX
+  RDK
+  install the library
+  install @reduxjs/toolkit
+and react-redux
+build our store
+connect our store to the app
+create a slice
+dispatch and action
+reducer(update it ,create it )
+selector (read it )

@@ -1,4 +1,4 @@
-import React, { Children, lazy, Suspense } from "react";
+import React, { Children, lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -9,14 +9,30 @@ import Error from "./components/ErrorComponent";
 import Restomenu from "./components/Restomenu";
 import Shimmer from "./components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import CounterContext from "./utils/counterContext";
+import userContext from "./utils/userContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 const Applayout = () => {
+
+  const [userName, setUserName] = useState("defaultuser");
+
   return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
+    <Provider store={appStore}>
+      <>
+
+        {/* <CounterContext.Provider value={{ Counter, setCounter }}> */}
+        <userContext.Provider value={{ userName, setUserName }}>
+          <Header />
+          <Outlet />
+          <Footer />
+        </userContext.Provider>
+        {/* </CounterContext.Provider> */}
+
+
+      </>
+    </Provider >
   );
 };
 const Grocery = lazy(() => import('./components/Grocery'))

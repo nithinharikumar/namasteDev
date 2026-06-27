@@ -1,6 +1,6 @@
 import RestaurantCard, { PromotedRestoCrad } from "./RestoCard";
-import { Restaurants } from "../utils/mock";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useContext } from "react";
 import useResturents from "../utils/hooks/useResturents";
 
 import { Link } from "react-router-dom";
@@ -8,10 +8,12 @@ import logo from "url:../assets/public/njanjan_logo_animated.gif";
 import Shimmer from "./Shimmer";
 import axios from "axios";
 import useSearch from "../utils/hooks/useSearch";
+import userContext from "../utils/userContext";
 const Body = () => {
   const [SearchFilter, setSearchData] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [showTopRated, setShowTopRated] = useState(false);
+  const { userName, setUserName } = useContext(userContext)
 
   const listofrestuarents = useResturents();
   const RestocardWithPromo = PromotedRestoCrad(RestaurantCard);
@@ -39,7 +41,10 @@ const Body = () => {
           prepared fresh and delivered instantly!
         </p>
       </div>
+      <div>
+        <input className="border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500" value={userName} onChange={(e) => setUserName(e.target.value)} />
 
+      </div>
       <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-slate-100 mb-8">
         <div className="flex flex-grow max-w-xl gap-3">
           <input
